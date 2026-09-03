@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AE Nexus | Professional Archive</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --card-bg: #121212;
+            --text: #ffffff;
+            --text-dim: #a0a0a0;
+            --accent: #9942ff;
+            --accent-hover: #8318e3;
+            --border: #222222;
+            --success: #00ff99;
+            --warning: #ffaa00;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 2rem; border-bottom: 1px solid var(--border);
+            background: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; }
+        .logo span { color: var(--accent); }
+
+        .status-badge {
+            background: rgba(0, 255, 153, 0.1); border: 1px solid var(--success);
+            color: var(--success); padding: 0.5rem 1rem; border-radius: 4px;
+            font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;
+        }
+
+        .hero { text-align: center; padding: 4rem 1rem; max-width: 800px; margin: 0 auto; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1rem; background: linear-gradient(45deg, #fff, #999); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--text-dim); margin-bottom: 2rem; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; padding: 2rem 0; }
+
+        .card {
+            background: var(--card-bg); border: 1px solid var(--border);
+            border-radius: 12px; overflow: hidden; transition: transform 0.2s, border-color 0.2s;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+
+        .card-header {
+            padding: 1.5rem; border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .card-title { font-weight: 700; font-size: 1.3rem; }
+        .version-badge {
+            background: var(--accent); color: white; font-size: 0.7rem;
+            padding: 0.25rem 0.8rem; border-radius: 4px; font-weight: 800;
+        }
+
+        .card-body { padding: 1.5rem; }
+        
+        .feature-list {
+            list-style: none; margin-bottom: 1.5rem;
+        }
+        .feature-list li {
+            color: var(--text-dim); font-size: 0.9rem; margin-bottom: 0.5rem;
+            padding-left: 1.5rem; position: relative;
+        }
+        .feature-list li::before {
+            content: "✓"; color: var(--accent); position: absolute; left: 0;
+            font-weight: 700;
+        }
+
+        .warning-text {
+            color: var(--warning); font-size: 0.8rem; margin-bottom: 1rem;
+            padding: 0.5rem; background: rgba(255, 170, 0, 0.1);
+            border-radius: 4px; border: 1px solid rgba(255, 170, 0, 0.2);
+        }
+
+        .btn {
+            display: block; width: 100%; padding: 1rem; background: var(--accent);
+            color: white; text-align: center; text-decoration: none; border-radius: 6px;
+            font-weight: 600; transition: 0.3s; border: none; cursor: pointer;
+        }
+        .btn:hover { background: var(--accent-hover); }
+
+        footer { text-align: center; padding: 3rem 1rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: 4rem; font-size: 0.8rem; }
+
+        /* Modal */
+        .modal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            z-index: 1000; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: var(--card-bg); padding: 2rem; border-radius: 12px;
+            max-width: 500px; border: 1px solid var(--border); text-align: center;
+        }
+        .modal h2 { color: var(--accent); margin-bottom: 1rem; }
+        .modal p { color: var(--text-dim); margin-bottom: 1.5rem; }
+        .btn-accept {
+            background: var(--success); color: black; padding: 0.75rem 2rem;
+            border: none; border-radius: 6px; font-weight: 700; cursor: pointer;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="disclaimer" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-exclamation-triangle"></i> Notice</h2>
+            <p>These files are for educational and testing purposes. We do not host any files. All links are third-party. Use at your own discretion.</p>
+            <button class="btn-accept" onclick="acceptDisclaimer()">I Understand</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo"><i class="fas fa-cube"></i> AE<span>NEXUS</span></div>
+        <div class="status-badge"><i class="fas fa-check-circle"></i> All Links Active</div>
+    </header>
+
+    <div class="hero">
+        <h1>After Effects Archive</h1>
+        <p>Complete repository of all major versions. Choose the build that fits your workflow.</p>
+    </div>
+
+    <div class="container">
+        <div class="grid" id="grid"></div>
+    </div>
+
+    <footer>
+        <p>© 2024 AE Nexus. Educational purposes only.</p>
+        <p>DMCA: We respect IP rights. Contact us for removal requests.</p>
+    </footer>
+
+    <script>
+        const softwareData = [
+            {
+                version: "v26.3 (2026)",
+                title: "After Effects 2026",
+                features: [
+                    "Advanced AI-powered rotoscoping improvements",
+                    "Real-time ray-traced 3D rendering engine",
+                    "Enhanced neural engine for faster processing",
+                    "New volumetric lighting and fog effects",
+                    "Improved multi-frame rendering performance",
+                    "Integration with Adobe Firefly AI tools"
+                ],
+                link: "https://bzzhr.to/fqlgpkm4t15a"
+            },
+            {
+                version: "v25.6 (2025)",
+                title: "After Effects 2025",
+                features: [
+                    "Text-based video editing capabilities",
+                    "Advanced 3D camera tracking improvements",
+                    "Enhanced Roto Brush 3.0 with better edge detection",
+                    "New particle simulation system",
+                    "Improved collaboration tools for teams",
+                    "Better HDR color management"
+                ],
+                link: "https://bzzhr.to/20s3e37me47a"
+            },
+            {
+                version: "v24.4 (2024)",
+                title: "After Effects 2024",
+                features: [
+                    "Roto Brush 3.0 with machine learning improvements",
+                    "Enhanced 3D pipeline with Cinema 4D Lite",
+                    "Improved performance on Apple Silicon",
+                    "New color grading tools and workflows",
+                    "Better integration with Adobe Stock",
+                    "Enhanced script and extension support"
+                ],
+                link: "https://bzzhr.to/iptvfjz21gbu"
+            },
+            {
+                version: "v23.2 (2023)",
+                title: "After Effects 2023",
+                features: [
+                    "Roto Brush 2.0 with improved edge refinement",
+                    "Enhanced 3D workspace and camera tools",
+                    "Better performance for large compositions",
+                    "Improved integration with Premiere Pro",
+                    "New expression controls and scripting API",
+                    "Enhanced audio visualization tools"
+                ],
+                link: "https://bzzhr.to/x06gw1phzxw6"
+            },
+            {
+                version: "v18.0 (2021)",
+                title: "After Effects 2021",
+                features: [
+                    "Essential Graphics improvements for motion graphics",
+                    "Enhanced performance for 3D compositions",
+                    "Better integration with Adobe Fonts",
+                    "Improved color management workflows",
+                    "New expression controls for automation",
+                    "Enhanced support for VR workflows"
+                ],
+                link: "https://bzzhr.to/52qjr9v4mfo1"
+            },
+            {
+                version: "v17.7 (2020)",
+                title: "After Effects 2020",
+                features: [
+                    "Content Aware Fill for video",
+                    "Improved 3D pipeline and camera tracking",
+                    "Enhanced performance for large projects",
+                    "Better integration with other Adobe apps",
+                    "New expression controls and scripting support",
+                    "Improved color management and HDR support"
+                ],
+                link: "https://bzzhr.to/q2f31xkc3d6s"
+            }
+        ];
+
+        const grid = document.getElementById('grid');
+        const modal = document.getElementById('disclaimer');
+
+        if(!localStorage.getItem('accepted')) {
+            modal.style.display = 'flex';
+        }
+
+        function acceptDisclaimer() {
+            localStorage.setItem('accepted', 'true');
+            modal.style.display = 'none';
+        }
+
+        function render() {
+            grid.innerHTML = '';
+            softwareData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-title">${item.title}</div>
+                        <span class="version-badge">${item.version}</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="feature-list">
+                            ${item.features.map(feature => `<li>${feature}</li>`).join('')}
+                        </ul>
+                        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="btn">
+                            <i class="fas fa-download"></i> Download ${item.title}
+                        </a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        render();
+    </script>
+</body>
+</html>
